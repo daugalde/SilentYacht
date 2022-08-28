@@ -1,0 +1,10 @@
+package common;
+
+public enum EnergyFor {
+	NONE,
+	ENGINE_START,
+	ENGINE_ACCELERATE_LOW,
+	ENGINE_ACCELERATE_MID,
+	ENGINE_ACCELERATE_HIGH,
+	LIGHTS
+}
