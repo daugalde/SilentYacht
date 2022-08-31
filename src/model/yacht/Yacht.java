@@ -8,6 +8,7 @@ import model.attachments.Battery;
 import model.attachments.Dashboard;
 import model.attachments.SolarPanel;
 import model.part.Engine;
+import view.AppView;
 
 public class Yacht implements PartType {
 
@@ -16,9 +17,15 @@ public class Yacht implements PartType {
 	public ArrayList<BasePart> getAllYachtParts() {
 		return allYachtParts;
 	}
+	
+	private AppView view;
 
-	public Yacht() {
-		
+	public void setAllYachtParts(ArrayList<BasePart> allYachtParts) {
+		this.allYachtParts = allYachtParts;
+	}
+
+	public Yacht(AppView view) {
+		this.view = view;
 	}
 
 	@Override
@@ -46,6 +53,14 @@ public class Yacht implements PartType {
 	
 	public BasePart findPartById (int id) {
 		return allYachtParts.get(id);
+	}
+
+	public AppView getView() {
+		return view;
+	}
+
+	public void setView(AppView view) {
+		this.view = view;
 	}
 
 }

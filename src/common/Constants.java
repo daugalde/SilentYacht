@@ -12,5 +12,5 @@ public class Constants {
 	
 	public static final int LEVEL_BATTERY_CHARGE = 100;
 	
-	public static final SunEnergy SUN_ENERGY_MOMENT = SunEnergy.NONE;
+	public static SunEnergy SUN_ENERGY_MOMENT = SunEnergy.NONE;
 }

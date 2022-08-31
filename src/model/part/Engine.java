@@ -17,7 +17,9 @@ public class Engine extends BasePart {
 	private float width = 1000;
 
 	private float height = 1000;
-
+	
+	private boolean isStarted;
+	
 	private ArrayList<Propeller> propellers = new ArrayList<Propeller> ();
 	
 	private Yacht yacht;
@@ -76,27 +78,52 @@ public class Engine extends BasePart {
 		}
 	}
 	
-	public void start(Energy energy) {
-		System.out.println("Here is starting engine" + energy.getValue());
+	public boolean start(Energy energy) {
+		
+		if(!isStarted()) {
+			setStarted(true);
+		}
+
 		setEngineVelocity (energy);
+		
+		return isStarted();
+	}
+	
+	public boolean stop() {
+		setStarted(false);
+		setEngineVelocity (new Energy (0));
+		return isStarted();
 	}
 	
 	public void accelerateOrSlowDown(Energy energy) {
-		System.out.println("Here is starting engine" + energy.getValue());
-		setEngineVelocity (energy);		
+		
+		if(isStarted()) {
+			setEngineVelocity (energy);		
+		}
+		else {
+			setEngineVelocity (new Energy(0));	
+		}
 	}
 	
 	private void setEngineVelocity (Energy energy) {
-		if(0 < energy.getValue() && energy.getValue()  <= 0.01 ) {
+		if (energy.getValue() == 0) {
+			setCurrentRevolutionStatus(RevolutionsPerMinute.NONE);
+			setStarted(false);
+			setAccelerating(false);
+		}else if(energy.getValue()  <= 0.01 ) {
+			setAccelerating(true);
 			setCurrentRevolutionStatus(RevolutionsPerMinute.START);
 			startPropeller();
 		} else if(energy.getValue()  <= 0.02) {
+			setAccelerating(true);
 			setCurrentRevolutionStatus(RevolutionsPerMinute.LOW);
 			startPropeller();
 		}else if(energy.getValue()  <= 0.04) {
+			setAccelerating(true);
 			setCurrentRevolutionStatus(RevolutionsPerMinute.MEDIUM);
 			startPropeller();
 		}if(energy.getValue()  <= 0.06) {
+			setAccelerating(true);
 			setCurrentRevolutionStatus(RevolutionsPerMinute.MAX);
 			startPropeller();
 		}
@@ -108,6 +135,23 @@ public class Engine extends BasePart {
 
 	public void setYacht(Yacht yacht) {
 		this.yacht = yacht;
+	}
+
+	public boolean isStarted() {
+		return isStarted;
+	}
+
+	public void setStarted(boolean isStarted) {
+		this.isStarted = isStarted;
+	}
+
+	
+	public boolean isAccelerating() {
+		return currentRevolutionStatus != RevolutionsPerMinute.START && currentRevolutionStatus != RevolutionsPerMinute.NONE ;
+	}
+	
+
+	public void setAccelerating(boolean isAccelerating) {
 	}
 
 }

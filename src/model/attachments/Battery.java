@@ -30,7 +30,7 @@ public class Battery extends BasePart {
 		this.energyCapacity = energyCapacity;
 	}
 	
-	public void chargeBattery(Energy energy) {
+	public String chargeBattery(Energy energy) {
 		float currentEnergyLevel = getEnergyCapacity() + energy.getValue();
 		
 		if(currentEnergyLevel > 100) {
@@ -40,7 +40,7 @@ public class Battery extends BasePart {
 		else {
 			setEnergyCapacity(currentEnergyLevel);
 		}
-		
+		return "charge battery";
 	}
 
 	public boolean getIsCharging() {
@@ -55,33 +55,35 @@ public class Battery extends BasePart {
 		
 		switch(energyFor){
 			case ENGINE_START:
-				if((getEnergyCapacity() - (1/100) ) < 0) {
-					setEnergyCapacity(getEnergyCapacity() - (1/100));
-					return new Energy ((1/100));
+				
+				if( (getEnergyCapacity() - 0.01) < 100) {					
+					setEnergyCapacity((float) (getEnergyCapacity() - 0.1));
+					return new Energy ((float)0.01);
 				}
 				else {
 					return new Energy (0);
 				}
+				
 			case ENGINE_ACCELERATE_LOW:
-				if((getEnergyCapacity() - (2/100) ) < 0) {
-					setEnergyCapacity(getEnergyCapacity() - (2/100));
-					return new Energy ((2/100));
+				if( (getEnergyCapacity() - 0.02)< 100) {					
+					setEnergyCapacity((float) (getEnergyCapacity() - 0.2));
+					return new Energy ((float)0.02);
 				}
 				else {
 					return new Energy (0);
 				}
 			case ENGINE_ACCELERATE_MID:
-				if((getEnergyCapacity() - (4/100) ) < 0) {
-					setEnergyCapacity(getEnergyCapacity() - (4/100));
-					return new Energy ((4/100));
+				if( (getEnergyCapacity() - 0.04)< 100) {
+					setEnergyCapacity((float) (getEnergyCapacity() - 0.04));
+					return new Energy ((float)0.04);
 				}
 				else {
 					return new Energy (0);
 				}
 			case ENGINE_ACCELERATE_HIGH:
-				if((getEnergyCapacity() - (6/100) ) < 0) {
-					setEnergyCapacity(getEnergyCapacity() - (6/100));
-					return new Energy ((6/100));
+				if( (getEnergyCapacity() - 0.06)< 100) {
+					setEnergyCapacity((float) (getEnergyCapacity() - 0.06));
+					return new Energy ((float)0.06);
 				}
 				else {
 					return new Energy (0);

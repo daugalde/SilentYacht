@@ -1,7 +1,5 @@
 package controller;
 
-import javax.swing.JOptionPane;
-
 import common.Constants;
 import common.PartTypes;
 import model.app.AppModel;
@@ -16,6 +14,8 @@ public class AppController {
 	private AppView view;
 
 	private Yacht yacht;
+	
+	private Thread simulate;
 
 	public AppController() {
 		this.model = new AppModel();
@@ -45,7 +45,7 @@ public class AppController {
 
 	public void initController() {
 		// Light Dependency Injection
-		yacht = new Yacht();
+		yacht = new Yacht(view);
 		
 		//This can be enhanced by Adding a Configuration File for future
 		yacht.addPart(PartTypes.ENGINE, Constants.MAX_ENGINE_QUANTITY);
@@ -58,16 +58,28 @@ public class AppController {
 	}
 	
 	public void addEventListeners() {
-		
 		view.getSimulateBtn().addActionListener(e -> startSimulation());
 	}
 	
 	private void startSimulation() {
-		JOptionPane.showMessageDialog(null,"Simulacion Iniciada");
-		Dashboard dash = (Dashboard)yacht.FindPartById(6);
+		resetUI () ;
+		Dashboard dash = (Dashboard)yacht.findPartById(6);
+		if(simulate != null && simulate.isAlive()) {
+			simulate.interrupt();
+			simulate = new Thread(dash);
+			simulate.start();
+		}
+		else {
+			simulate = new Thread(dash);
+			simulate.start();
+		}
 		
-		dash.run();
-		//Start timer for 90 seconds
 	}
- 
+	
+	private void resetUI () {
+		view.getBatteryLevel1().setValue(100);
+		view.getBatteryLevel2().setValue(100);
+		view.getLoggerArea().setText("");
+		view.getSunLevel().setText("");
+	}
 }

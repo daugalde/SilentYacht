@@ -40,7 +40,7 @@ public class SolarPanel extends BasePart {
 	}
 	
 	public SunEnergy getEnergySupply() {
-		return energySupply;
+		return Constants.SUN_ENERGY_MOMENT;
 	}
 
 	public void setEnergySupply(SunEnergy energySupply) {
@@ -51,17 +51,17 @@ public class SolarPanel extends BasePart {
     	
     	Energy energy;
     	
-		switch(energySupply) {
+		switch(Constants.SUN_ENERGY_MOMENT) {
 			case AFTERNOON:
 			case RAINING:
-				energy = new Energy((1/100)); 
+				energy = new Energy((float)0.01); 
 				break;
 			case MORNING:
-				energy = new Energy((2/100));
+				energy = new Energy((float)0.02);
 				break;
 			case MIDDAY:		
 			case SUNNY:
-				energy = new Energy((3/100));
+				energy = new Energy((float)0.03);
 				break;		
 			case NIGHT:
 			default:

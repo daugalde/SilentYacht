@@ -33,7 +33,6 @@ public class AppView {
 	private JLabel sunLevel;
 	private JLabel titleLabel;
 	private JLabel eventsLabel;    
-	private JPanel panel;
 	private JProgressBar batteryLevel1;
 	private JProgressBar batteryLevel2;
 	private JScrollPane scrollPane;
@@ -176,14 +175,6 @@ public class AppView {
 		this.eventsLabel = eventsLabel;
 	}
 
-	public JPanel getPanel() {
-		return panel;
-	}
-
-	public void setPanel(JPanel panel) {
-		this.panel = panel;
-	}
-
 	public JProgressBar getBatteryLevel1() {
 		return batteryLevel1;
 	}
@@ -261,10 +252,9 @@ public class AppView {
 		yachtVelocityLabel = new JLabel("Velocidad Yate en Nudos");
 		yachtVelocity = new JLabel("0");
 		sunLevelLabel = new JLabel("Nivel de Sol");
-		sunLevel = new JLabel("0");
+		sunLevel = new JLabel("NONE");
 		titleLabel = new JLabel("Simulador Yate Dashboard ");
 		eventsLabel = new JLabel("Eventos");
-		panel = new JPanel();
 		simulateBtn = new JButton("Iniciar Simulacion");
 		batteryLevel1 = new JProgressBar  ();
 		batteryLevel2 = new JProgressBar  ();
@@ -274,19 +264,6 @@ public class AppView {
 		panelCharger2 = new JToggleButton ("ON");
 		panelCharger3 = new JToggleButton ("ON");
 		simulationPeriod = new JComboBox<>(new DefaultComboBoxModel<>(new String[] { "60 segundos", "90 Segundos" }));
-	}
-	
-	private void initPanel () {
-		GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
-        panel.setLayout(panelLayout);
-        panelLayout.setHorizontalGroup(
-        		panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 448, Short.MAX_VALUE)
-        );
-        panelLayout.setVerticalGroup(
-        		panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 235, Short.MAX_VALUE)
-        );
 	}
 	
 	private void initProgressBars () {
@@ -300,21 +277,21 @@ public class AppView {
 		panelCharger1.setSelected(true);
 		panelCharger2.setSelected(true);
 		panelCharger3.setSelected(true);
+		panelCharger1.setEnabled(false);
+		panelCharger2.setEnabled(false);
+		panelCharger3.setEnabled(false);
 	}
 	
 	private void bindComponents () {
 		layout = new GroupLayout(frame.getContentPane());
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
-		initPanel();
 		initProgressBars();
 		initToggleBtns();
 		scrollPane.setViewportView(loggerArea);
 		layout.setHorizontalGroup(
 	            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 	            .addGroup(layout.createSequentialGroup()
-	                .addGap(49, 49, 49)
-	                .addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 	                .addGap(41, 41, 41)
 	                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 	                    .addGroup(layout.createSequentialGroup()
@@ -353,7 +330,6 @@ public class AppView {
 	            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 	            .addGroup(layout.createSequentialGroup()
 	                .addGap(43, 43, 43)
-	                .addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 	                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 	            .addGroup(layout.createSequentialGroup()
 	                .addGap(20, 20, 20)
